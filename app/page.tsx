@@ -6,6 +6,8 @@ import PartnerMarquee from "./components/home/marquee";
 import Project from "./components/home/project";
 import Service from "./components/home/service";
 import ChatBot from "./components/home/chat";
+import Process from "./components/home/process";
+import TrustSection from "./components/home/marquee";
 export const metadata: Metadata = {
   title: "Option Enter Software Company Limited | Innovative Tech Solutions",
   description:
@@ -46,12 +48,15 @@ export const metadata: Metadata = {
 
 export default function Hero() {
   return (
-    <div className="  min-h-screen bg-[#F3F3F3] ">
-      <ChatBot />
+    <div className="relative  min-h-screen  ">
+     
+      {/* <ChatBot /> */}
       <Cursor />
       <Header />
-      <PartnerMarquee />
+      {/* <PartnerMarquee /> */}
       <Service />
+      <Process />
+      <TrustSection />
       <Project />
       <Contact />
     </div>

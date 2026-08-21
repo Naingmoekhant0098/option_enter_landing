@@ -1,76 +1,66 @@
 "use client";
+
 import Marquee from "react-fast-marquee";
 
-const partners = [
-  { name: "Partner 1", logo: "https://logos-world.net/wp-content/uploads/2020/05/Nike-Logo-1978.png" },
-  { name: "Partner 2", logo: "https://logos-world.net/wp-content/uploads/2020/05/Nike-Logo-1978.png" },
-  { name: "Partner 3", logo: "https://logos-world.net/wp-content/uploads/2020/05/Nike-Logo-1978.png" },
-  { name: "Partner 4", logo: "https://logos-world.net/wp-content/uploads/2020/05/Nike-Logo-1978.png" },
-  { name: "Partner 5", logo: "https://logos-world.net/wp-content/uploads/2020/05/Nike-Logo-1978.png" },
-  { name: "Partner 4", logo: "https://logos-world.net/wp-content/uploads/2020/05/Nike-Logo-1978.png" },
-  { name: "Partner 5", logo: "https://logos-world.net/wp-content/uploads/2020/05/Nike-Logo-1978.png" },
-  { name: "Partner 4", logo: "https://logos-world.net/wp-content/uploads/2020/05/Nike-Logo-1978.png" },
-  { name: "Partner 5", logo: "https://logos-world.net/wp-content/uploads/2020/05/Nike-Logo-1978.png" },
+const logos = [
+  "MPT",
+  "ACE Data Systems",
+  "Crossworks",
+  "Digital Dots",
+  "Ezsy",
+  "TAM79",
+  "Onenex",
+  "Ooredoo",
 ];
 
-interface MarqueeRowProps {
-  items: typeof partners;
-  direction?: "left" | "right";
-}
-
-const MarqueeRow = ({ items, direction = "left" }: MarqueeRowProps) => {
+export default function TrustSection() {
   return (
-    <div className="relative py-4">
-      <Marquee 
-        direction={direction} 
-        speed={50} 
-        gradient={false} 
-        pauseOnHover={true}
-        // This is key: it replaces the manual gap logic
-        className="overflow-hidden"
-      >
-        {items.map((partner, idx) => (
-          <div
-            key={idx}
-            // Use mx-8 or mx-12 to create consistent spacing between logos
-            className="mx-8 flex-none transition-all duration-500 hover:opacity-100 opacity-30 cursor-pointer"
-          >
-            <img
-              src={partner.logo}
-              alt={partner.name}
-              className="h-10 md:h-9 w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
-            />
-          </div>
-        ))}
-      </Marquee>
-    </div>
-  );
-};
+    <div className="bg-gradient-to-r relative from-pink-50 to-blue-50 py-20 overflow-hidden">
+      {/* Background pattern */}
+      <div className="absolute inset-0 z-0 opacity-[0.15] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] bg-[radial-gradient(#374151_1px,transparent_1px)] [background-size:24px_24px]"></div>
 
-export default function PartnerMarquee() {
-  return (
-    <section className="relative flex flex-col justify-center items-center py-24 overflow-hidden bg-white ">
-      <div className="w-full max-w-5xl px-3 md:px-6">
-        
+      <section className="relative z-10 max-w-[1300px] mx-auto font-mono px-4">
         <div className="mb-16 text-center">
-          <p className="text-[12px] font-medium uppercase tracking-[0.4em] text-orange-500">
-            Trusted by Industry Leaders
-          </p>
-          <h2 className="mt-2 text-2xl md:text-3xl font-mono font-bold tracking-tight text-gray-800">
-          SUSTAINABLE SOLUTIONS BUILT ON MUTUAL TRUST.
+          <div className="inline-flex items-center gap-2 px-5 mb-3 py-2 border border-slate-200 rounded-full bg-white shadow-sm">
+            <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-zinc-800">
+              OUR STRATEGIC PARTNERS
+            </span>
+          </div>
+          <h2 className="mt-1 text-2xl md:text-4xl mx-auto font-bold max-w-3xl tracking-tight text-black">
+            Industry leaders trust us to deliver sustainable digital solutions.
           </h2>
         </div>
 
-        {/* Removed bg-red-50 to keep it clean */}
-        <div className="relative space-y-4">
-          {/* Gradient Overlays - Ensure z-index is higher than the marquee */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-white to-transparent z-20" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-white to-transparent z-20" />
+        <div className="relative max-w-4xl mx-auto overflow-hidden space-y-12">
+          {/* Left and Right Fade Gradients matching the pink/blue background */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-pink-50 to-transparent z-20" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-blue-50 to-transparent z-20" />
 
-          <MarqueeRow items={partners} direction="left" />
-          <MarqueeRow items={partners} direction="right" />
+          {/* Row 1: Moving Left */}
+          <Marquee speed={40} pauseOnHover autoFill className="py-2">
+            {logos.map((logo, index) => (
+              <div
+                key={`row1-${index}`}
+                className="mx-8 text-3xl font-bold text-gray-400 grayscale hover:grayscale-0 hover:text-black transition-all duration-300 cursor-pointer whitespace-nowrap"
+              >
+                {logo}
+              </div>
+            ))}
+          </Marquee>
+
+          {/* Row 2: Moving Right */}
+          <Marquee speed={40} pauseOnHover autoFill direction="right" className="py-2">
+            {logos.map((logo, index) => (
+              <div
+                key={`row2-${index}`}
+                className="mx-8 text-3xl font-bold text-gray-400 grayscale hover:grayscale-0 hover:text-black transition-all duration-300 cursor-pointer whitespace-nowrap"
+              >
+                {logo}
+              </div>
+            ))}
+          </Marquee>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

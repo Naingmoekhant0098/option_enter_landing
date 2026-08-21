@@ -13,7 +13,7 @@ function Cursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-4 h-4 bg-orange-500 rounded-full pointer-events-none z-[90] mix-blend-difference"
+      className="fixed top-0 left-0 w-4 h-4  bg-orange-500 rounded-full pointer-events-none z-[90] mix-blend-difference"
       animate={{ x: mousePos.x - 10, y: mousePos.y - 10 }}
       transition={{ type: "spring", damping: 25, stiffness: 250, mass: 0.5 }}
     />

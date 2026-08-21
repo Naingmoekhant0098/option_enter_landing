@@ -13,6 +13,8 @@ import {
 import Cursor from "./components/home/cursor";
 import Nav from "./components/home/nav";
 import Footer from "./components/home/footer";
+import { useState } from "react";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,13 +35,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const [isDark, setIsDark] = useState(false);
+  const [transition, setTransition] = useState({ active: false, x: 0, y: 0 });
+
+  
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col ">
-        <header className="fixed top-0 w-full z-[100]   flex flex-col items-center">
+      <body className="min-h-full flex flex-col relative ">
+
+        <div className="absolute -top-40 left-10 h-[600px] w-[600px] rounded-full bg-blue-900/20 blur-[150px]"></div>
+        <div className="absolute -top-40 right-10 h-[600px] w-[600px] rounded-full bg-purple-950/20 blur-[150px]"></div>
+
+        <div className="[mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_20%,transparent_100%)] opacity-6 absolute inset-0 z-0 bg-[linear-gradient(to_right,#374151_1px,transparent_1px),linear-gradient(to_bottom,#374151_1px,transparent_1px)] bg-[size:3rem_3rem]"></div>
+
+        {/* <header className="fixed top-0 w-full z-[100]   flex flex-col items-center">
           <div className="relative group -mt-0.5">
             <motion.div
               initial={{ y: -20, opacity: 0 }}
@@ -60,7 +74,7 @@ export default function RootLayout({
               className="absolute top-0 -right-[37px]  rotate-10 w-[40px] h-[30px] bg-transparent rounded-tl-[40px] rounded-b-[0px] shadow-[-20px_0_0_0_#1a1a1a]"
             />
           </div>
-        </header>
+        </header> */}
         <Nav />
 
         {children}
@@ -69,3 +83,4 @@ export default function RootLayout({
     </html>
   );
 }
+ 

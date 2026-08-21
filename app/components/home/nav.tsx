@@ -1,10 +1,34 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin } from "lucide-react";
+import { MapPin, Moon, Sun } from "lucide-react";
 
-function Nav() {
+function Nav({ onToggleTheme, isDark }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState("Home");
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  // const languages = [
+  //   { key: "en", name: "English", sub: "English", flag: "🇺🇸" },
+  //   { key: "my", name: "Burmese", sub: "မြန်မာ", flag: "🇲🇲" },
+  //   { key: "th", name: "Thai", sub: "ไทย", flag: "🇹🇭" },
+  //   { key: "cn", name: "Chinese", sub: "中文", flag: "🇨🇳" },
+  // ];
+  const items = ["Home", "Works", "About", "Contact"];
+  const handleThemeClick = (e) => {
+    // Get button position for the circle center
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    onToggleTheme(x, y);
+  };
+  // useEffect(() => {
+  //   if (dark) {
+  //     document.documentElement.classList.add("dark");
+  //   } else {
+  //     document.documentElement.classList.remove("dark");
+  //   }
+  // }, [dark]);
 
   const sidebarVariants: any = {
     closed: {
@@ -32,15 +56,13 @@ function Nav() {
     } else {
       document.body.style.overflow = "unset";
     }
-
-    // Cleanup function to ensure scroll is restored if component unmounts
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
   return (
-    <nav className="w-full p-8 pb-4 mt-2 md:mt-4 text-black  flex justify-between items-center">
+    <nav className="w-full p-8 py-5  text-black  flex justify-between items-center">
       <motion.span
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -48,35 +70,45 @@ function Nav() {
       >
         O<span className="text-orange-500">E.</span>
       </motion.span>
-
-      <div className="hidden md:flex gap-10 text-[13px] font-mono tracking-[0.3em] uppercase text-zinc-800">
-        {["Works","About", "Contact"].map((item) => (
-          <motion.a
+      <div
+        className="relative flex items-center p-1 rounded-full bg-black/5 backdrop-blur-lg border border-slate-200 "
+        onMouseLeave={() => setHoveredItem(null)}
+      >
+        {items.map((item) => (
+          <button
             key={item}
-            href={`/${item.toLowerCase()}`}
-            className="relative py-2 transition-colors duration-300 hover:text-orange-500"
-            initial="initial"
-            whileHover="hover"
+            className={`relative px-6 py-3 text-[12px] font-semibold tracking-[0.2em] uppercase transition-colors duration-300 ${
+              activeItem === item ? "text-black" : "text-black hover:text-black"
+            }`}
+            onMouseEnter={() => setHoveredItem(item)}
+            onClick={() => setActiveItem(item)}
           >
-            {item}
+            <span className="relative z-20">{item}</span>
 
-            <motion.span
-              className="absolute bottom-0 left-0 h-[2px] bg-orange-500"
-              variants={{
-                initial: { width: "0%" },
-                hover: { width: "100%" },
-              }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            />
-          </motion.a>
+            {(hoveredItem === item ||
+              (hoveredItem === null && activeItem === item)) && (
+              <motion.div
+                layoutId="pill"
+                className="absolute inset-0 z-10 rounded-full bg-white/20 border border-white/40 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
+                transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+              />
+            )}
+          </button>
         ))}
       </div>
-      <button className="group hidden md:block relative px-6 py-2.5 border border-zinc-800 rounded-full overflow-hidden transition-all hover:border-orange-500">
-        <span className="relative z-10 text-black font-mono text-xs font-bold uppercase tracking-widest group-hover:text-black transition-colors duration-300">
-          Contact now
-        </span>
-        <div className="absolute inset-0 bg-orange-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-      </button>
+
+      <div className=" flex items-center gap-3">
+        <button
+          onClick={handleThemeClick}
+          className="w-10 h-10 flex items-center justify-center rounded-full  bg-black/5 backdrop-blur-lg border cursor-pointer border-slate-200 transition-all hover:bg-white/60"
+        >
+          {isDark ? (
+            <Sun className="w-5 h-5 text-yellow-500" />
+          ) : (
+            <Moon className="w-5 h-5 text-slate-700" />
+          )}
+        </button>
+      </div>
 
       <div className="relative z-[9999] block  md:hidden ">
         <button

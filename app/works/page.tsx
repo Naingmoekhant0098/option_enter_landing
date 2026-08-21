@@ -95,7 +95,7 @@ export default function Work() {
             initial="initial"
             whileHover="hover"
           >
-            {/* The Zooming Image */}
+           
             <motion.img
               src={item.image}
               alt={item.title}

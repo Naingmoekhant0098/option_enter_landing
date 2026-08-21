@@ -25,3 +25,15 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+@layer base {
+  body {
+    @apply bg-white text-black transition-colors duration-500;
+  }
+  
+  .dark body {
+    @apply bg-[#111] text-white;
+  }
+}
+
